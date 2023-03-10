@@ -10,9 +10,10 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Name</th>
+              <th scope="col">Tipo</th>
               <th scope="col">Creato il</th>
               <th scope="col">Aggiornato il</th>
-              <th class="border-0"></th>
+              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -20,20 +21,23 @@
             <tr>
                 <th scope="row" class="border-start">{{ $project->id }}</th>
                 <td>{{ $project->name }}</td>
+                <td>{{ $project->type?->label }}</td>
                 <td>{{ $project->created_at }}</td>
                 <td class="border-end">{{ $project->updated_at }}</td>
-                <td class="d-flex align-items-center justify-content-center border-0">
-                    <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-success">
-                        <i class="fa-solid fa-eye"></i>
-                    </a>
-                    <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning mx-4">
-                        <i class="fa-solid fa-pencil"></i>
-                    </a>
-                    <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
-                    </form>
+                <td class="border-end">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <a href="{{ route('admin.projects.show', $project->id) }}" class="btn btn-success">
+                            <i class="fa-solid fa-eye"></i>
+                        </a>
+                        <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning mx-4">
+                            <i class="fa-solid fa-pencil"></i>
+                        </a>
+                        <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+                        </form>
+                    </div>
                 </td>
             </tr> 
             @empty
