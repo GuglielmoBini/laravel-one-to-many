@@ -1,0 +1,42 @@
+@extends('layouts.app')
+@section('title', 'Details')
+@section('content')
+<section id="detail">
+    <header>
+        <h1 class="my-4">{{ $project->name }}</h1>
+    </header>
+    <div class="d-flex flex-column align-items-center">
+        <div class="card mb-3">
+          <div class="row g-0">
+            <div class="col-4">
+              <img src="{{ asset('storage/' . $project->image_url) }}" class="img-fluid w-100 h-100 rounded-start" alt="{{ $project->name }}">
+            </div>
+            <div class="col-8">
+              <div class="row g-0 h-100 flex-column">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">Descrizione</h5>
+                  <p class="card-text flex-grow-1">{{ $project->description }}</p>
+                  <p class="card-text"><small class="text-muted"><strong>Created: </strong>{{ $project->created_at }}</small></p>
+                </div>
+                <div class="card-body border-top d-flex align-items-center justify-content-around">
+                  <a href="{{ $project->project_url }}">Project link</a>
+                  <a href="{{ $project->image_url }}">Image URL</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex">
+          <a href="{{ route('admin.projects.index') }}" class="btn btn-primary">Torna Indietro</a>
+          <a href="{{ route('admin.projects.edit', $project->id) }}" class="btn btn-warning mx-4">
+            <i class="fa-solid fa-pencil"></i>
+        </a>
+          <form action="{{ route('admin.projects.destroy', $project->id) }}" method="POST">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn btn-danger"><i class="fa-solid fa-trash"></i></button>
+        </form>
+        </div>
+    </div>
+  </section>
+@endsection
