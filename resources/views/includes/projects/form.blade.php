@@ -7,11 +7,23 @@
     @endif
     @csrf
         <div class="row">
-            <div class="col-6">
+            <div class="col-9">
                 <div class="mb-3">
                     <label for="name" class="form-label">Nome Progetto</label>
                     <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $project->name) }}" minlength="5" maxlength="50" required>
                     <small class="text-muted">Inserisci il nome del progetto</small>
+                  </div>
+            </div>
+            <div class="col-3">
+                <div class="mb-3">
+                    <label for="type_id" class="form-label">Tipo</label>
+                    <select class="form-select" id="type_id" name="type_id">
+                        <option value="">--</option>
+                        @foreach ($types as $type)
+                        <option @if(old('type_id', $project->type_id) == $type->id) selected @endif value="{{ $type->id }}">{{ $type->label }}</option>
+                        @endforeach
+                      </select>
+                    <small class="text-muted">Scegli la tipologia</small>
                   </div>
             </div>
             <div class="col-12">

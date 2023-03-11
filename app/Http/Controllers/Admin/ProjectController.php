@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Project;
+use App\Models\Type;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Storage;
@@ -26,7 +27,8 @@ class ProjectController extends Controller
     public function create()
     {
         $project = new Project();
-        return view('admin.projects.create', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.create', compact('project', 'types'));
     }
 
     /**
@@ -39,7 +41,8 @@ class ProjectController extends Controller
                 'name' => 'required|string|unique:projects|min:5|max:50',
                 'project_url' => 'required|string',
                 'image_url' => 'nullable|image|mimes:jpeg,jpg,png',
-                'description' => 'required|string'
+                'description' => 'required|string',
+                'type_id' => 'nullable|exists:types,id'
             ],
             [
                 'name.required' => 'Il nome del progetto è obbligatorio',
@@ -49,7 +52,8 @@ class ProjectController extends Controller
                 'project_url.required' => 'Il link progetto è obbligatorio',
                 'image_url.image' => 'L\'immagine deve essere un file di tipo immagine.',
                 'image_url.mimes' => 'Le estensioni accettate sono: jpeg, jpg, png',
-                'description.required' => 'La descrizione è obbligatoria'
+                'description.required' => 'La descrizione è obbligatoria',
+                'type_id' => 'Tipo non valido'
             ]
         );
 
@@ -80,7 +84,8 @@ class ProjectController extends Controller
      */
     public function edit(Project $project)
     {
-        return view('admin.projects.edit', compact('project'));
+        $types = Type::all();
+        return view('admin.projects.edit', compact('project', 'types'));
     }
 
     /**
@@ -93,7 +98,8 @@ class ProjectController extends Controller
                 'name' => ['required', 'string', Rule::unique('projects')->ignore($project->id), 'min:5', 'max:50'],
                 'project_url' => 'required|string',
                 'image_url' => 'nullable|image|mimes:jpeg,jpg,png',
-                'description' => 'required|string'
+                'description' => 'required|string',
+                'type_id' => 'nullable|exists:types,id'
             ],
             [
                 'name.required' => 'Il nome del progetto è obbligatorio',
@@ -103,7 +109,8 @@ class ProjectController extends Controller
                 'project_url.required' => 'Il link progetto è obbligatorio',
                 'image_url.image' => 'L\'immagine deve essere un file di tipo immagine.',
                 'image_url.mimes' => 'Le estensioni accettate sono: jpeg, jpg, png',
-                'description.required' => 'La descrizione è obbligatoria'
+                'description.required' => 'La descrizione è obbligatoria',
+                'type_id' => 'Tipo non valido'
             ]
         );
 
