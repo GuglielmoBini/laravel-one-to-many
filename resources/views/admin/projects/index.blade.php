@@ -7,7 +7,7 @@
     </header>
     <table class="table">
         <thead>
-            <tr>
+            <tr class="text-center">
               <th scope="col">#</th>
               <th scope="col">Name</th>
               <th scope="col">Tipo</th>
@@ -18,10 +18,16 @@
           </thead>
           <tbody>
             @forelse ($projects as $project)
-            <tr>
+            <tr class="text-center">
                 <th scope="row" class="border-start">{{ $project->id }}</th>
                 <td>{{ $project->name }}</td>
-                <td>{{ $project->type?->label }}</td>
+                <td>
+                    @if ($project->type)
+                        <span class="badge rounded-pill fs-6" style="background-color: {{ $project->type->color }}">{{ $project->type->label }}</span>
+                    @else
+                     - 
+                    @endif
+                </td>
                 <td>{{ $project->created_at }}</td>
                 <td class="border-end">{{ $project->updated_at }}</td>
                 <td class="border-end">

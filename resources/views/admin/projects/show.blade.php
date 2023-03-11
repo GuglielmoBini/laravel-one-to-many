@@ -3,7 +3,12 @@
 @section('content')
 <section id="detail">
     <header>
-        <h1 class="my-4">{{ $project->name }}</h1>
+        <h1 class="my-3">{{ $project->name }}</h1>
+        @if ($project->type)
+          <div class="badge rounded-pill fs-5 mb-3" style="background-color: {{ $project->type->color }}">{{ $project->type->label }}</div>
+        @else
+          <div class="fs-5 mb-3 text-warning">Nessuna tipologia</div> 
+        @endif
     </header>
     <div class="d-flex flex-column align-items-center">
         <div class="card mb-3">
